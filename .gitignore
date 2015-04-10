@@ -1,0 +1,28 @@
+### Files
+
+*.log
+*.iml
+.env
+*.sqlite
+.DS_Store
+*.swp
+
+### IDE specific
+.idea
+
+
+### Npm files
+node_modules
+
+### Generated
+.sass-cache
+public
+**/generated/*.scss
+
+### Test output
+.test-mongo-db
+test-output
+
+### gomatic before/after scripts
+scripts/config-*.xml
+

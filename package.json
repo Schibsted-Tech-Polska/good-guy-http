@@ -1,0 +1,26 @@
+{
+  "name": "good-guy-http",
+  "version": "1.0.0",
+  "description": "The opinionated sane HTTP client with a good guy approach.",
+  "main": "lib/index.js",
+  "repository": "git@bitbucket.org:schibstednorge/good-guy-http.git",
+  "scripts": {
+    "test": "node_modules/mocha/bin/mocha"
+  },
+  "keywords": [
+    "http",
+    "client"
+  ],
+  "author": "Jakub Wasilewski <wasyl@wasyl.eu>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "2.9.24",
+    "request": "2.55.0"
+  },
+  "devDependencies": {
+    "express": "^4.12.3",
+    "jshint": "^2.6.3",
+    "mocha": "^2.2.1",
+    "supertest": "^0.15.0"
+  }
+}

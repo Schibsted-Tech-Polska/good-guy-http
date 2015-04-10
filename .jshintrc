@@ -1,0 +1,6 @@
+{
+  /* disabling some warnings due to disagreement with some of JSHint's default opinions */
+
+  "-W069": true, /* using ['blah'] is OK over the dot notation if we expect the thing to not be there */
+  "-W041": true  /* == 0 is OK when we want to show intent */
+}

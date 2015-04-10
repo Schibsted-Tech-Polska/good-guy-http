@@ -19,6 +19,26 @@ describe("Promised requests", function() {
       done();
     }).catch(done);
   });
+
+  it("should reject on 4xx HTTP status", function(done) {
+    req(app.url("/return-status/404")).then(function() {
+      done("The promise wasn't rejected.");
+    }).catch(function(err) {
+      assert.equal(err.message, "HTTP error: status code 404");
+      assert.equal(err.status, 404);
+      done();
+    });
+  });
+
+  it("should reject on 5xx HTTP status", function(done) {
+    req(app.url("/return-status/500")).then(function() {
+      done(new Error("The promise wasn't rejected."));
+    }).catch(function(err) {
+      assert.equal(err.message, "HTTP error: status code 500");
+      assert.equal(err.status, 500);
+      done();
+    });
+  });
 });
 
 

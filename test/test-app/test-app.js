@@ -61,5 +61,12 @@ function createExpressApp() {
     res.status(200).send(req.params.body);
   });
 
+  // responds "Ok!" after a delay of :ms milliseconds
+  app.get('/delay-for-ms/:ms', function(req, res) {
+    setTimeout(function() {
+      res.status(200).send("Ok!");
+    }, parseInt(req.params.ms));
+  });
+
   return app;
 }

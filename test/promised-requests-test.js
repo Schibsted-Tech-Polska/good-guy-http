@@ -4,7 +4,7 @@ var assert = require('assert');
 
 describe("Promised requests", function() {
   var app = require('./test-app')();
-  var req = require('../lib/promised-request')(request.defaults({timeout: 1000}));
+  var req = require('../lib/promised-request')(request.defaults({timeout: 500}));
 
   before(function(done) {
     app.startListening().then(done).catch(done);
@@ -24,6 +24,7 @@ describe("Promised requests", function() {
     req(app.url("/return-status/404")).then(function() {
       done("The promise wasn't rejected.");
     }).catch(function(err) {
+      assert.equal(err.code, "EHTTP");
       assert.equal(err.message, "HTTP error: status code 404");
       assert.equal(err.status, 404);
       done();
@@ -34,8 +35,30 @@ describe("Promised requests", function() {
     req(app.url("/return-status/500")).then(function() {
       done(new Error("The promise wasn't rejected."));
     }).catch(function(err) {
+      assert.equal(err.code, "EHTTP");
       assert.equal(err.message, "HTTP error: status code 500");
       assert.equal(err.status, 500);
+      done();
+    });
+  });
+
+  it("should reject when the request times out", function(done) {
+    req({
+      url: app.url("/delay-for-ms/2000"),
+      timeout: 10
+    }).then(function() {
+      done(new Error("The promise wasn't rejected."));
+    }).catch(function(err) {
+      assert.equal(err.code, "ETIMEDOUT");
+      done();
+    });
+  });
+
+  it("should reject when connection fails", function(done) {
+    req("http://127.0.0.1:1/").then(function() {
+      done(new Error("The promise wasn't rejected."));
+    }).catch(function(err) {
+      assert.equal(err.code, "ECONNREFUSED");
       done();
     });
   });

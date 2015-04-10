@@ -1,6 +1,7 @@
 var request = require('request');
 var assert = require('assert');
 var Promise = require('bluebird');
+var expectRejection = require('./helpers').expectRejection;
 
 describe("Promised requests", function() {
   var app = require('./test-app')();

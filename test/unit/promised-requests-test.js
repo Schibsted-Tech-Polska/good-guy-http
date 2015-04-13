@@ -1,11 +1,11 @@
 var request = require('request');
 var assert = require('assert');
 var Promise = require('bluebird');
-var expectRejection = require('./helpers').expectRejection;
+var expectRejection = require('./../helpers').expectRejection;
 
 describe("Promised requests", function() {
-  var app = require('./test-app')();
-  var req = require('../lib/promised-request')(request.defaults({timeout: 500}));
+  var app = require('./../test-app/test-app')();
+  var req = require('../../lib/promised-request')(request.defaults({timeout: 500}));
 
   before(function(done) {
     app.startListening().then(done).catch(done);

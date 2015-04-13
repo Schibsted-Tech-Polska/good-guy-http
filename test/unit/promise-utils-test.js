@@ -1,8 +1,8 @@
 var assert = require('assert');
 var Promise = require('bluebird');
-var retryPromise = require('../lib/promise-utils').retryPromise;
-var collapsePromises = require('../lib/promise-utils').collapsePromises;
-var expectRejection = require('./helpers').expectRejection;
+var retryPromise = require('../../lib/promise-utils').retryPromise;
+var collapsePromises = require('../../lib/promise-utils').collapsePromises;
+var expectRejection = require('./../helpers').expectRejection;
 
 describe("Retrying promises", function() {
 

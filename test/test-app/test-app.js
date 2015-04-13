@@ -68,5 +68,16 @@ function createExpressApp() {
     }, parseInt(req.params.ms));
   });
 
+  // for each ID - fails 2 times with 500, then returns "Ok!"
+  var fttsCounts = {};
+  app.get('/fail-twice-then-succeed/:id', function(req, res) {
+    var count = fttsCounts[req.params.id] || 0;
+    fttsCounts[req.params.id] = count + 1;
+    if (count >= 2)
+      res.status(200).send("Ok!");
+    else
+      res.status(500).send("Oh my!");
+  });
+
   return app;
 }

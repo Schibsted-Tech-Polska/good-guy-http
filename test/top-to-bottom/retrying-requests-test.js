@@ -1,6 +1,4 @@
-var request = require('request');
 var assert = require('assert');
-var Promise = require('bluebird');
 var expectRejection = require('./../helpers').expectRejection;
 
 describe("Requesting with retries", function() {
@@ -42,5 +40,5 @@ describe("Requesting with retries", function() {
 
 
 function gghttpWithRetries(retries) {
-  return require('../../')({maxRetries: retries, cache: false});
+  return require('../../')({maxRetries: retries, collapseIdenticalRequests: false, cache: false});
 }

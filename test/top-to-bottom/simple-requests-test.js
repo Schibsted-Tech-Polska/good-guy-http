@@ -1,6 +1,4 @@
-var request = require('request');
 var assert = require('assert');
-var Promise = require('bluebird');
 var expectRejection = require('./../helpers').expectRejection;
 
 describe("Good guy HTTP", function() {
@@ -8,7 +6,7 @@ describe("Good guy HTTP", function() {
 
   var gghttp = require('../../')({
     maxRetries: 0,
-    collapseSimilarRequests: true,
+    collapseIdenticalRequests: false,
     cache: false
   });
 

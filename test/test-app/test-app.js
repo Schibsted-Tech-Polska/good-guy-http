@@ -79,5 +79,15 @@ function createExpressApp() {
       res.status(500).send("Oh my!");
   });
 
+  // for each ID - returns an incrementing counter after a small delay, starting at 1 for the first request
+  var icCounts = {};
+  app.get('/incrementing-counter/:id', function(req, res) {
+    var count = icCounts[req.params.id] || 1;
+    icCounts[req.params.id] = count + 1;
+    setTimeout(function() {
+      res.status(200).send(count.toString());
+    }, 10);
+  });
+
   return app;
 }

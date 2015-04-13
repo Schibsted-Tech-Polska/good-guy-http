@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "repository": "git@bitbucket.org:schibstednorge/good-guy-http.git",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha"
+    "test": "node_modules/mocha/bin/mocha --recursive"
   },
   "keywords": [
     "http",
@@ -15,7 +15,8 @@
   "license": "MIT",
   "dependencies": {
     "bluebird": "2.9.24",
-    "request": "2.55.0"
+    "request": "2.55.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "express": "^4.12.3",

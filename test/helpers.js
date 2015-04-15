@@ -13,3 +13,15 @@ module.exports.expectRejection = function expectRejection(promise) {
     });
   });
 };
+
+module.exports.mockTimer = function() {
+  var time = 0;
+  var timer = function() {
+    return time;
+  };
+  timer.advance = function(ms) {
+    time += ms;
+  };
+  return timer;
+};
+

@@ -56,7 +56,7 @@ describe("Good guy HTTP", function() {
       url: app.url("/delay-for-ms/2000"),
       timeout: 10
     })).then(function(err) {
-      assert.equal(err.code, "ETIMEDOUT");
+      assert(err.code == "ETIMEDOUT" || err.code == "ESOCKETTIMEDOUT");
       done();
     }).catch(done);
   });

@@ -94,5 +94,15 @@ function createExpressApp() {
     }, 10);
   });
 
+  // incrementing counter with a configurable cache-control setting
+  app.get('/counter/:id/cache-control/:cache', function(req, res) {
+    var count = icCounts[req.params.id] || 1;
+    icCounts[req.params.id] = count + 1;
+
+    res.status(200)
+      .set('Cache-Control', req.params.cache)
+      .send(count.toString());
+  });
+
   return app;
 }

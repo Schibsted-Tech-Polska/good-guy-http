@@ -16,7 +16,8 @@
   "dependencies": {
     "bluebird": "2.9.24",
     "request": "2.55.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "underscore.string": "^3.0.3"
   },
   "devDependencies": {
     "express": "^4.12.3",

@@ -16,7 +16,9 @@ describe("Promised requests", function() {
 
   it("should return the body on success", function(done) {
     req(app.url("/return-body/hello")).then(function(result) {
-      assert.equal(result, "hello");
+      assert.equal(result.httpVersion, "1.1");
+      assert.equal(result.statusCode, 200);
+      assert.equal(result.body, "hello");
       done();
     }).catch(done);
   });

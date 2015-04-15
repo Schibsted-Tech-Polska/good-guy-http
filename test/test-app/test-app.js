@@ -61,6 +61,11 @@ function createExpressApp() {
     res.status(200).send(req.params.body);
   });
 
+  // returns a chosen header with HTTP status 200
+  app.get('/return-header/:name/:value', function(req, res) {
+    res.status(200).set(req.params.name, req.params.value).send("Ok!");
+  });
+
   // responds "Ok!" after a delay of :ms milliseconds
   app.get('/delay-for-ms/:ms', function(req, res) {
     setTimeout(function() {

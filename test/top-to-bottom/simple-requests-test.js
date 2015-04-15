@@ -17,9 +17,18 @@ describe("Good guy HTTP", function() {
     app.stopListening().then(done).catch(done);
   });
 
-  it("should return the body on success", function(done) {
+  it("should resolve with a response on success", function(done) {
     gghttp(app.url("/return-body/hello")).then(function(result) {
-      assert.equal(result, "hello");
+      assert.equal(result.httpVersion, "1.1");
+      assert.equal(result.statusCode, 200);
+      assert.equal(result.body, "hello");
+      done();
+    }).catch(done);
+  });
+
+  it("should provide correct headers", function(done) {
+    gghttp(app.url("/return-header/X-Hello/world!")).then(function(result) {
+      assert.equal(result.headers['x-hello'], 'world!');
       done();
     }).catch(done);
   });

@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var assert = require('assert');
 var Promise = require('bluebird');
 
@@ -16,6 +17,7 @@ describe("Requests with collapsing", function() {
 
     var url = app.url("/incrementing-counter/scirbd");
     Promise.all([gghttp(url), gghttp(url), gghttp(url)]).then(function(results) {
+      results = _.pluck(results, 'body');
       assert.deepEqual(results, ['1','1','1']);
       done();
     }).catch(done);
@@ -27,6 +29,7 @@ describe("Requests with collapsing", function() {
     var first = gghttp({url: url, timeout: 20});
     var second = gghttp({url: url, timeout: 21});
     Promise.all([first, second]).then(function(results) {
+      results = _.pluck(results, 'body');
       assert.deepEqual(results.sort(), ['1', '2']);
       done();
     }).catch(done);
@@ -37,6 +40,7 @@ describe("Requests with collapsing", function() {
 
     var url = app.url("/incrementing-counter/sncweto");
     Promise.all([gghttp(url), gghttp(url), gghttp(url)]).then(function(results) {
+      results = _.pluck(results, 'body');
       assert.deepEqual(results.sort(), ['1','2','3']);
       done();
     }).catch(done);
@@ -46,9 +50,9 @@ describe("Requests with collapsing", function() {
     var gghttp = require('../../')({cache: false});
     var url = app.url("/incrementing-counter/smnritinor");
     gghttp(url).then(function(result) {
-      assert.equal(result, '1');
+      assert.equal(result.body, '1');
       gghttp(url).then(function(result) {
-        assert.equal(result, '2');
+        assert.equal(result.body, '2');
         done();
       });
     }).catch(done);

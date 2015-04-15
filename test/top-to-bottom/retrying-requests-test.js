@@ -15,7 +15,7 @@ describe("Requesting with retries", function() {
     var gghttp = gghttpWithRetries(2);
 
     gghttp(app.url("/return-body/hello")).then(function(result) {
-      assert.equal(result, "hello");
+      assert.equal(result.body, "hello");
       done();
     }).catch(done);
   });
@@ -23,7 +23,7 @@ describe("Requesting with retries", function() {
   it("should succeed if one of the retries succeeds", function(done) {
     var gghttp = gghttpWithRetries(2);
     gghttp(app.url("/fail-twice-then-succeed/id1")).then(function(result) {
-      assert.equal(result, "Ok!");
+      assert.equal(result.body, "Ok!");
       done();
     }).catch(done);
   });

@@ -68,6 +68,8 @@ All options will be passed onto request. The `get`, `post`, etc. convenience met
 All functions support both a promise-based interface (when no callback is passed) and a traditional callback-based one
 (when a callback function *is* passed as the second parameter).
 
+The response object that you will receive will not be a http.IncomingMessage, since those are difficult to cache. Instead, you will get a plain old object with `statusCode`, `headers`, `body` and `httpVersion` in all the same places they would be in normal responses.
+
 ### Caches
 
 Any object that has these methods can be used as a cache:

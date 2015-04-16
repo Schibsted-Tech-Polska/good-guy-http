@@ -104,5 +104,10 @@ function createExpressApp() {
       .send(count.toString());
   });
 
+  // register a route for each HTTP method returning the method that was used in a header (to test HEAD properly)
+  app.all('/return-method-used/:method', function(req, res) {
+    res.status(200).set('X-Method', req.method).send('');
+  });
+
   return app;
 }

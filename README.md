@@ -1,14 +1,17 @@
 # Good guy HTTP
 
-Good guy HTTP is an HTTP client library based on the [request](request) module, adding the following stuff on top:
+Good guy HTTP is an HTTP client library based on the [request][request] module, adding the following stuff on top:
 
 * easy promise-based interface
 * caching GET and other idempotent requests, either in-memory or using your chosen cache
 ** this automatically obeys 'Cache-control' headers, but you can provide defaults for when it's missing
 * retrying failed requests
 * collapsing identical requests made at the same time into one
+* reporting HTTP error statuses as errors (promise rejections)
 * sane but strict defaults regarding timeouts etc.
 * supports everything request supports by passing all the options to it
+
+![Good Guy HTTP](http://i.imgur.com/m7trEtL.jpg)
 
 All of this is optional and you can opt-out of some or all of it.
 
@@ -79,6 +82,8 @@ var goodGuy = goodGuyLib({cache: goodGuyLib.inMemoryCache(10)});  // smaller in-
 var goodGuy = goodGuyLib({cache: false});                         // disable caching altogether
 var goodGuy = goodGuyLib({cache: customCache});                   // your custom implementation based on Redis/Mongo/Bitcoin blockchain
 ```
+
+[request]: https://github.com/request/request
 
 
 

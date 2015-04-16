@@ -32,7 +32,7 @@ describe("Requesting with retries", function() {
     var gghttp = gghttpWithRetries(1);
     expectRejection(gghttp(app.url("/fail-twice-then-succeed/id2"))).then(function(err) {
       assert.equal(err.code, "EHTTP");
-      assert.equal(err.status, 500);
+      assert.equal(err.statusCode, 500);
       done();
     }).catch(done);
   });

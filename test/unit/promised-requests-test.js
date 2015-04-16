@@ -27,7 +27,7 @@ describe("Promised requests", function() {
     expectRejection(req(app.url("/return-status/404"))).then(function(err) {
       assert.equal(err.code, "EHTTP");
       assert.equal(err.message, "HTTP error: status code 404");
-      assert.equal(err.status, 404);
+      assert.equal(err.statusCode, 404);
       done();
     }).catch(done);
   });
@@ -36,7 +36,7 @@ describe("Promised requests", function() {
     expectRejection(req(app.url("/return-status/500"))).then(function(err) {
       assert.equal(err.code, "EHTTP");
       assert.equal(err.message, "HTTP error: status code 500");
-      assert.equal(err.status, 500);
+      assert.equal(err.statusCode, 500);
       done();
     }).catch(done);
   });

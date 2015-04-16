@@ -110,6 +110,21 @@ describe("Caching", function() {
       assert.equal(loggerSpy.callCount, 4); // 4 errors should be logged, 2 per request
     }).then(done).catch(done);
   });
+
+  it("should differentiate between requests with different Accept", function(done) {
+    var gghttp = lib({mockTimer: timer});
+
+    var url = app.url('/counter/sdbrwda/cache-control/max-age=3600');
+    gghttp({url: url, headers: {accept: 'application/json'}}).then(function(res) {
+      // first request should return a fresh response directly from the app
+      expectResponse(res, '1', 'fresh');
+      timer.advance(1000);
+      return gghttp({url: url, headers: {accept: 'text/plain'}});
+    }).then(function(res) {
+      // second response should also be fresh, since we're asking for different content type
+      expectResponse(res, '2', 'fresh');
+    }).then(done).catch(done);
+  });
 });
 
 

@@ -1,4 +1,4 @@
-# Good guy HTTP
+# good-guy-http
 
 Good guy HTTP is an HTTP client library based on the [request][request] module, adding the following stuff on top:
 

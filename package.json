@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The opinionated sane HTTP client with a good guy approach.",
   "main": "lib/index.js",
-  "repository": "git@bitbucket.org:schibstednorge/good-guy-http.git",
+  "repository": "git@github.com:Schibsted-Tech-Polska/good-guy-http.git",
   "scripts": {
     "test": "node_modules/mocha/bin/mocha --recursive"
   },
@@ -16,8 +16,8 @@
   "dependencies": {
     "bluebird": "2.9.24",
     "request": "2.55.0",
-    "underscore": "^1.8.3",
-    "underscore.string": "^3.0.3"
+    "underscore": "1.8.3",
+    "underscore.string": "3.0.3"
   },
   "devDependencies": {
     "express": "^4.12.3",

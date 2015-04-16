@@ -4,7 +4,7 @@ Good guy HTTP is an HTTP client library based on the [request][request] module, 
 
 * easy promise-based interface
 * caching GET and other idempotent requests, either in-memory or using your chosen cache
-** this automatically obeys 'Cache-control' headers, but you can provide defaults for when it's missing
+  * this automatically obeys 'Cache-control' headers, but you can provide defaults for when it's missing
 * retrying failed requests
 * collapsing identical requests made at the same time into one
 * reporting HTTP error statuses as errors (promise rejections)

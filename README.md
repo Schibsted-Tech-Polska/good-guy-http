@@ -1,5 +1,7 @@
 # good-guy-http
 
+[![Build Status](https://travis-ci.org/Schibsted-Tech-Polska/good-guy-http.svg?branch=master)](https://travis-ci.org/Schibsted-Tech-Polska/good-guy-http)
+
 Good guy HTTP is an HTTP client library based on the [request][request] module, adding the following stuff on top:
 
 * easy promise-based interface

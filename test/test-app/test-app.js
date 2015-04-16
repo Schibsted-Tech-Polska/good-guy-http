@@ -75,7 +75,7 @@ function createExpressApp() {
 
   // for each ID - fails 2 times with 500, then returns "Ok!"
   var fttsCounts = {};
-  app.get('/fail-twice-then-succeed/:id', function(req, res) {
+  app.all('/fail-twice-then-succeed/:id', function(req, res) {
     var count = fttsCounts[req.params.id] || 0;
     fttsCounts[req.params.id] = count + 1;
     if (count >= 2)
@@ -86,7 +86,7 @@ function createExpressApp() {
 
   // for each ID - returns an incrementing counter after a small delay, starting at 1 for the first request
   var icCounts = {};
-  app.get('/incrementing-counter/:id', function(req, res) {
+  app.all('/incrementing-counter/:id', function(req, res) {
     var count = icCounts[req.params.id] || 1;
     icCounts[req.params.id] = count + 1;
     setTimeout(function() {
@@ -95,7 +95,7 @@ function createExpressApp() {
   });
 
   // incrementing counter with a configurable cache-control setting
-  app.get('/counter/:id/cache-control/:cache', function(req, res) {
+  app.all('/counter/:id/cache-control/:cache', function(req, res) {
     var count = icCounts[req.params.id] || 1;
     icCounts[req.params.id] = count + 1;
 

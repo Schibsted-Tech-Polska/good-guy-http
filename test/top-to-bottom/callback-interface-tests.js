@@ -31,4 +31,14 @@ describe("Callback interface", function() {
       done();
     });
   });
+
+  it("should work with convenience methods", function(done) {
+    gghttp.get(app.url("/return-body/hello"), function(err, response) {
+      assert(!err);
+      assert(response);
+      assert.equal(response.statusCode, 200);
+      assert.equal(response.body, 'hello');
+      done();
+    });
+  });
 });

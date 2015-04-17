@@ -10,3 +10,5 @@ node_js:
 #  on:
 #    tags: true
 #    repo: Schibsted-Tech-Polska/good-guy-http
+after_success:
+  cat ./coverage/lcov.info | node_modules/.bin/coveralls

@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "repository": "git@github.com:Schibsted-Tech-Polska/good-guy-http.git",
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha --recursive"
+    "test": "./node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha -- --recursive"
   },
   "keywords": [
     "http",
@@ -20,7 +20,9 @@
     "underscore.string": "3.0.3"
   },
   "devDependencies": {
+    "coveralls": "^2.11.2",
     "express": "^4.12.3",
+    "istanbul": "^0.3.13",
     "jshint": "^2.6.3",
     "mocha": "^2.2.1",
     "sinon": "^1.14.1",

@@ -14,3 +14,4 @@ node_modules
 
 ### Coverage
 coverage
+.coveralls.yml

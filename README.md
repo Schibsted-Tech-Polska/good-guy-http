@@ -1,6 +1,6 @@
 # good-guy-http
 
-[![Build Status](https://travis-ci.org/Schibsted-Tech-Polska/good-guy-http.svg?branch=master)](https://travis-ci.org/Schibsted-Tech-Polska/good-guy-http) [![Coverage Status](https://coveralls.io/repos/Schibsted-Tech-Polska/good-guy-http/badge.svg?branch=master)](https://coveralls.io/r/Schibsted-Tech-Polska/good-guy-http?branch=master)
+[![Build Status](https://travis-ci.org/Schibsted-Tech-Polska/good-guy-http.svg?branch=master)](https://travis-ci.org/Schibsted-Tech-Polska/good-guy-http) [![Coverage Status](https://coveralls.io/repos/Schibsted-Tech-Polska/good-guy-http/badge.svg?branch=master)](https://coveralls.io/r/Schibsted-Tech-Polska/good-guy-http?branch=master) [![Dependency status](https://david-dm.org/Schibsted-Tech-Polska/good-guy-http.svg)](https://david-dm.org/Schibsted-Tech-Polska/good-guy-http)
 
 Good guy HTTP is an HTTP client library based on the [request][request] module, adding the following stuff on top:
 

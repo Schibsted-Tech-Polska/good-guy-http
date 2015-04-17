@@ -11,6 +11,7 @@ Good guy HTTP is an HTTP client library based on the [request][request] module, 
 * collapsing identical requests made at the same time into one
 * reporting HTTP error statuses as errors (promise rejections)
 * sane but strict defaults regarding timeouts etc.
+* optional postprocessing of response to cache expensive parsing/munging operations
 * supports everything request supports by passing all the options to it
 
 ![Good Guy HTTP](http://i.imgur.com/m7trEtL.jpg)

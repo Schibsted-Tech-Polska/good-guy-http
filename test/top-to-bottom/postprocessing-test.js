@@ -41,7 +41,7 @@ describe("Postprocessing", function() {
       // stale request
       assert.equal(n, 1);
       timer.advance(100);
-      return wait(20).then(function() {
+      return wait(50).then(function() {
         return gghttp(url);
       });
     }).then(function(n) {

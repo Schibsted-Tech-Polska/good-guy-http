@@ -35,7 +35,7 @@ describe("Caching", function() {
       expectResponse(res, '1', 'stale');
 
       // give some time for the background update to finish
-      return wait(10).then(function() {
+      return wait(50).then(function() {
         timer.advance(1000);
         return gghttp(url);
       });

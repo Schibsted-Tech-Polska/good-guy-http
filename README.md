@@ -42,6 +42,9 @@ var goodGuy = require('good-guy-http')({
   cache: ...,                        // cache object - see below for details                  
   errorLogger: console.error,        // error logging function - a failing cache doesn't break requests, but logs here
                                      // instead
+  postprocess: false                 // pass a function here if you want to postprocess the response before caching/
+                                     // returning it, e.g. function(res) { return JSON.parse(res.body); }
+                                     // useful for ensuring that expensive parsing happens only once
   
   defaultCaching: {                  // default caching settings for responses without Cache-Control                   
     cached: true, 
@@ -58,6 +61,12 @@ recognize will be used to configure the underlying `request` object:
 var goodGuy = require('good-guy-http')({
   timeout: 100 // that's request's timeout option
 });
+```
+
+Good guy objects can also be reconfigured on the fly by adding good guy options to the request:
+
+```javascript
+goodGuy({url: 'http://extremely-flaky-server.org', maxRetries: 10}).then(...);
 ```
 
 ### The goodguy interface

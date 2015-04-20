@@ -57,6 +57,21 @@ describe("Promised requests", function() {
       done();
     }).catch(done);
   });
+
+  it("should include the request and response in HTTP errors", function(done) {
+    expectRejection(req(app.url("/return-status/500"))).then(function(err) {
+      assert(err.response);
+      assert(err.request);
+      assert.equal(err.request, app.url('/return-status/500'));
+    }).then(done).catch(done);
+  });
+
+  it("should include the request in connectivity errors", function(done) {
+    expectRejection(req('http://127.0.0.1:1')).then(function(err) {
+      assert(err.request);
+      assert.equal(err.request, 'http://127.0.0.1:1');
+    }).then(done).catch(done);
+  });
 });
 
 

@@ -11,5 +11,5 @@ node_js:
 #    tags: true
 #    repo: Schibsted-Tech-Polska/good-guy-http
 after_success:
-  npm run coverage
-  cat ./coverage/lcov.info | node_modules/.bin/coveralls
+- npm run coverage
+- cat ./coverage/lcov.info | node_modules/.bin/coveralls

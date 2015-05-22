@@ -40,7 +40,9 @@ var goodGuy = require('good-guy-http')({
   allowServingStale: true,           // should goodguy return stale cached content after it expires?
                                      // it WILL be updated in the background either way, but if content that's
                                      // a bit stale is acceptable, your requests will appear to be much faster
-  cache: ...,                        // cache object - see below for details                  
+  cache: ...,                        // cache object - see below for details         
+  cacheResponseTimeout: 500          // how many ms to wait for the cache to respond before ignoring it completely
+                                     // useful for remote caches (e.g. Redis)
   errorLogger: console.error,        // error logging function - a failing cache doesn't break requests, but logs here
                                      // instead
   postprocess: false                 // pass a function here if you want to postprocess the response before caching/

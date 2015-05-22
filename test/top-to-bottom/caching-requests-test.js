@@ -129,6 +129,21 @@ describe("Caching", function() {
     }).then(done).catch(done);
   });
 
+  it("should respect the cache response timeout set", function(done) {
+    var cache = slowCache(30);
+    var gghttp = lib({cache: cache, cacheResponseTimeout: 5, errorLogger: function() {}});
+    var url = app.url('/counter/srtcrts/cache-control/max-age=5');
+
+    // requests should work despite the cache not responding in time
+    gghttp(url).then(function(res) {
+      expectResponse(res, '1', 'fresh');
+      return gghttp(url);
+    }).then(function(res) {
+      // this should be fresh since the cache should be ignored
+      expectResponse(res, '2', 'fresh');
+    }).then(done).catch(done);
+  });
+
   it("should differentiate between requests with different Accept", function(done) {
     var gghttp = lib({mockTimer: timer});
 

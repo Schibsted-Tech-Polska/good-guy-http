@@ -51,6 +51,16 @@ describe("Collapsing promises", function() {
     }).catch(done);
   });
 
+  it("should pass errors correctly", function(done) {
+    var fn = function() {
+      return Promise.reject("Ouch!");
+    };
+    fn = collapsePromises(fn);
+    expectRejection(fn()).then(function(error) {
+      assert.equal(error, "Ouch!");
+    }).then(done).catch(done);
+  });
+
   it("should collapse multiple calls into one", function(done) {
     var fn = collapsePromises(makeOneTimeDoublingFunction(10));
     Promise.all([fn(1), fn(1), fn(1)]).then(function(results) {
@@ -108,6 +118,7 @@ describe("Timeout wrapper for promises", function() {
       assert.equal(error.code, "ETIMEDOUT");
     }).then(done).catch(done);
   });
+
 });
 
 function waitThenReturnValue(value, ms) {

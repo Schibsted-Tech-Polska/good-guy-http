@@ -2,6 +2,7 @@ var Promise = require('bluebird');
 var assert = require('assert');
 var lib = require('../../');
 var mockTimer = require('../helpers').mockTimer;
+var wait = require('../helpers').waitFor;
 
 describe("Postprocessing", function() {
   var app = require('./../test-app/test-app')();
@@ -76,10 +77,4 @@ function extractBody(response) {
 
 function extractNumber(response) {
   return parseInt(response.body);
-}
-
-function wait(ms) {
-  return new Promise(function(resolve) {
-    setTimeout(resolve, ms);
-  });
 }

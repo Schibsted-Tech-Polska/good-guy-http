@@ -3,6 +3,9 @@ var Promise = require('bluebird');
 var assert = require('assert');
 var lib = require('../../');
 var mockTimer = require('../helpers').mockTimer;
+var wait = require('../helpers').waitFor;
+var slowCache = require('../helpers/slow-cache');
+var _ = require('underscore');
 
 describe("Caching", function() {
   var app = require('./../test-app/test-app')();
@@ -111,6 +114,21 @@ describe("Caching", function() {
     }).then(done).catch(done);
   });
 
+  it("should cope with slow caches by collapsing cache requests", function(done) {
+    var cache = slowCache(25);
+    var gghttp = lib({cache: cache});
+    var url = app.url('/counter/scwscbccr/cache-control/max-age=5');
+    var requests = _.map(_.range(5), function() {
+      return gghttp(url);
+    });
+
+    Promise.all(requests).then(function(results) {
+      var bodies = _.pluck(results, 'body');
+      assert.deepEqual(bodies, ['1', '1', '1', '1', '1']);
+      assert.equal(cache.retrievesCalled(), 1);
+    }).then(done).catch(done);
+  });
+
   it("should differentiate between requests with different Accept", function(done) {
     var gghttp = lib({mockTimer: timer});
 
@@ -135,12 +153,6 @@ function expectResponse(response, body, ggState) {
 
 function cacheState(response) {
   return response.headers['x-gg-state'];
-}
-
-function wait(ms) {
-  return new Promise(function(resolve) {
-    setTimeout(resolve, ms);
-  });
 }
 
 var faultyCache = {

@@ -25,3 +25,25 @@ module.exports.mockTimer = function() {
   return timer;
 };
 
+module.exports.waitFor = function(ms) {
+  return new Promise(function(resolve) {
+    setTimeout(resolve, ms);
+  });
+};
+
+module.exports.delayCache = function(originalCache, delayMs) {
+  var waitFor = module.exports.waitFor;
+  return {
+    store: function(key, object) {
+      return waitFor(delayMs).then(function() {
+        return originalCache.store(key, object);
+      });
+    },
+
+    retrieve: function(key) {
+      return waitFor(delayMs).then(function() {
+        return originalCache.retrieve(key);
+      });
+    }
+  };
+};

@@ -1,7 +1,11 @@
 var assert = require('assert');
 var Promise = require('bluebird');
+var waitFor = require('../helpers').waitFor;
+
 var retryPromise = require('../../lib/promise-utils').retryPromise;
 var collapsePromises = require('../../lib/promise-utils').collapsePromises;
+var timeoutPromise = require('../../lib/promise-utils').timeoutPromise;
+
 var expectRejection = require('./../helpers').expectRejection;
 
 describe("Retrying promises", function() {
@@ -73,8 +77,46 @@ describe("Collapsing promises", function() {
       });
     }).catch(done);
   });
-
 });
+
+describe("Timeout wrapper for promises", function() {
+  it("should pass results correctly", function(done) {
+    var fn = function() {
+      return Promise.resolve("Ok!");
+    };
+    fn = timeoutPromise(fn, 50);
+
+    fn().then(function(result) {
+      assert.equal(result, "Ok!");
+    }).then(done).catch(done);
+  });
+
+  it("should pass errors correctly", function(done) {
+    var fn = function() {
+      return Promise.reject("Argh!");
+    };
+    fn = timeoutPromise(fn, 50);
+
+    expectRejection(fn()).then(function(error) {
+      assert.equal(error, "Argh!");
+    }).then(done).catch(done);
+  });
+
+  it("should return timeouts as errors", function(done) {
+    var fn = timeoutPromise(waitThenReturnValue("Ok!", 20), 10);
+    expectRejection(fn()).then(function(error) {
+      assert.equal(error.code, "ETIMEDOUT");
+    }).then(done).catch(done);
+  });
+});
+
+function waitThenReturnValue(value, ms) {
+  return function() {
+    return waitFor(ms).then(function() {
+      return value;
+    });
+  };
+}
 
 function failXTimesThenReturnArgument(times) {
   return function(result) {

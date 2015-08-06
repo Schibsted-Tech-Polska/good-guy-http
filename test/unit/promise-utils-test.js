@@ -69,7 +69,7 @@ describe("Collapsing promises", function() {
     }).catch(done);
   });
 
-  it("should collapse only when parameters are the same", function(done) {
+  it("should collapse only when parameters are the same by default", function(done) {
     var fn = collapsePromises(makeOneTimeDoublingFunction(10));
     Promise.all([fn(1), fn(1), fn(2)]).then(function(results) {
       assert.deepEqual(results, [2, 2, 'already-called']);
@@ -86,6 +86,15 @@ describe("Collapsing promises", function() {
         done();
       });
     }).catch(done);
+  });
+
+  it("should use the provide key function to check if calls should be collapsed", function(done) {
+    var fn = collapsePromises(makeOneTimeDoublingFunction(10), function(args) {
+      return Math.floor(args[0]);
+    });
+    Promise.all([fn(2.3), fn(2.7)]).then(function(results) {
+      assert.deepEqual(results, [4,4]);
+    }).then(done).catch(done);
   });
 });
 
@@ -145,7 +154,7 @@ function makeOneTimeDoublingFunction(delay) {
       if (alreadyCalled) return resolve("already-called");
       alreadyCalled = true;
       setTimeout(function() {
-        resolve(value * 2);
+        resolve(Math.floor(value) * 2);
       }, delay);
     });
   };

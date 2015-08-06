@@ -18,4 +18,9 @@ describe("Request keys", function() {
     assert.equal(requestKey(req), 'GET|http://example.org|Accept:application/json');
   });
 
+  it("should work when request is wrapped in an array", function() {
+    var req = canonicalizeRequest("http://example.org");
+    assert.equal(requestKey([req]), 'GET|http://example.org');
+  });
+
 });

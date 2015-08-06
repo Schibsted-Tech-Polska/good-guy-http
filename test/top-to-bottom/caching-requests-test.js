@@ -129,6 +129,21 @@ describe("Caching", function() {
     }).then(done).catch(done);
   });
 
+  it("should not send multiple cache store requests for concurrent requests to the same URL", function(done) {
+    var cache = slowCache(5);
+    var gghttp = lib({cache: cache});
+    var url = app.url('/delay-for-ms/25');
+    var requests = _.map(_.range(20), function() {
+      return gghttp(url);
+    });
+
+    Promise.all(requests).then(function(results) {
+      var bodies = _.pluck(results, 'body');
+      //assert.deepEqual(bodies, ['Ok!', 'Ok!', 'Ok!', 'Ok!', 'Ok!']);
+      assert.equal(cache.storesCalled(), 1);
+    }).then(done).catch(done);
+  });
+
   it("should cope with slow caches without making fetches incredibly long", function(done) {
     var cache = slowCache(3000);
     var gghttp = lib({cache: cache, cacheResponseTimeout: 20, errorLogger: function(){}});

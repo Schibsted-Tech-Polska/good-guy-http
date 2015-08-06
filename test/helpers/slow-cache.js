@@ -8,15 +8,15 @@ module.exports = function(delayMs) {
 
   return {
     store: function(key, object) {
+      storesCalled++;
       return waitFor(delayMs).then(function() {
-        storesCalled++;
         return originalCache.store(key, object);
       });
     },
 
     retrieve: function(key) {
+      retrievesCalled++;
       return waitFor(delayMs).then(function() {
-        retrievesCalled++;
         return originalCache.retrieve(key);
       });
     },

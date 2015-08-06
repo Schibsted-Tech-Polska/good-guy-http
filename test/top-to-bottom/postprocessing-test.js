@@ -69,6 +69,14 @@ describe("Postprocessing", function() {
       assert.equal(n, 2);
     }).then(done).catch(done);
   });
+
+  it('should run only once for a set of collapsed requests', function(done) {
+    var gghttp = lib({postprocess: extractBodyOnlyOnce()});
+    var url = app.url('/delay-for-ms/10');
+    Promise.all([gghttp(url), gghttp(url), gghttp(url)]).then(function(results) {
+      assert.deepEqual(results, ["Ok!", "Ok!", "Ok!"]);
+    }).then(done).catch(done);
+  });
 });
 
 function extractBody(response) {
@@ -77,4 +85,13 @@ function extractBody(response) {
 
 function extractNumber(response) {
   return parseInt(response.body);
+}
+
+function extractBodyOnlyOnce() {
+  var alreadyCalled = false;
+  return function(response) {
+    if (alreadyCalled) throw new Error("extractBodyOnlyOnce was called multiple times.");
+    alreadyCalled = true;
+    return response.body;
+  };
 }

@@ -129,6 +129,18 @@ describe("Caching", function() {
     }).then(done).catch(done);
   });
 
+  it("should cope with slow caches without making fetches incredibly long", function(done) {
+    var cache = slowCache(3000);
+    var gghttp = lib({cache: cache, cacheResponseTimeout: 20, errorLogger: function(){}});
+    var url = app.url('/counter/scwscwmfil/cache-control/max-age=5');
+
+    var startTime = (new Date()).getTime();
+    gghttp(url).then(function() {
+      var endTime = (new Date()).getTime();
+      assert.ok((endTime - startTime) < 1000);
+    }).then(done).catch(done);
+  });
+
   it("should respect the cache response timeout set", function(done) {
     var cache = slowCache(30);
     var gghttp = lib({cache: cache, cacheResponseTimeout: 5, errorLogger: function() {}});

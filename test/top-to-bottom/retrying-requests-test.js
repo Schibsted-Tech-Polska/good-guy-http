@@ -36,6 +36,15 @@ describe("Requesting with retries", function() {
       done();
     }).catch(done);
   });
+
+  it("should not retry if the response was a 4xx", function(done) {
+    var gghttp = gghttpWithRetries(1);
+    expectRejection(gghttp(app.url("/return-404-then-200/snritrwa4"))).then(function(err) {
+      assert.equal(err.code, "EHTTP");
+      assert.equal(err.statusCode, 404);
+      done();
+    }).catch(done);
+  });
 });
 
 

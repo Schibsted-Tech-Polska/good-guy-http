@@ -6,8 +6,8 @@ var Promise = require('bluebird');
  */
 module.exports.expectRejection = function expectRejection(promise) {
   return new Promise(function(resolve, reject) {
-    promise.then(function() {
-      reject(new Error("The promise wasn't rejected."));
+    promise.then(function(value) {
+      reject(new Error("The promise wasn't rejected, but resolved with value: " + value));
     }).catch(function(err) {
       resolve(err);
     });

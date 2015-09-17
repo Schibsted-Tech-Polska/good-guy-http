@@ -40,6 +40,14 @@ describe("Retrying promises", function() {
       done();
     }).catch(done);
   });
+
+  it("should not retry when the error has an 'unretriable' flag set", function(done) {
+    var testFn = failUnretriablyThenSucceed();
+    var withRetries  = retryPromise(testFn, 2);
+    expectRejection(withRetries()).then(function(err) {
+      assert.equal(err.message, "Ouch!");
+    }).then(done).catch(done);
+  });
 });
 
 describe("Collapsing promises", function() {
@@ -144,6 +152,18 @@ function failXTimesThenReturnArgument(times) {
       return Promise.reject("Failing, " + times + " remaining!");
     else
       return Promise.resolve(result);
+  };
+}
+
+function failUnretriablyThenSucceed() {
+  var calledAlready = false;
+  return function() {
+    if (!calledAlready) {
+      calledAlready = true;
+      return Promise.reject({message: 'Ouch!', unretriable: true});
+    } else {
+      return Promise.resolve("I'm better now.");
+    }
   };
 }
 

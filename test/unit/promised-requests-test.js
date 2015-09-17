@@ -23,20 +23,22 @@ describe("Promised requests", function() {
     }).catch(done);
   });
 
-  it("should reject on 4xx HTTP status", function(done) {
+  it("should reject on 4xx HTTP status without the possibility of retrying", function(done) {
     expectRejection(req(app.url("/return-status/404"))).then(function(err) {
       assert.equal(err.code, "EHTTP");
       assert.equal(err.message, "HTTP error: status code 404");
       assert.equal(err.statusCode, 404);
+      assert.ok(err.unretriable);
       done();
     }).catch(done);
   });
 
-  it("should reject on 5xx HTTP status", function(done) {
+  it("should reject on 5xx HTTP status with possibility of retrying", function(done) {
     expectRejection(req(app.url("/return-status/500"))).then(function(err) {
       assert.equal(err.code, "EHTTP");
       assert.equal(err.message, "HTTP error: status code 500");
       assert.equal(err.statusCode, 500);
+      assert.ok(!err.unretriable);
       done();
     }).catch(done);
   });

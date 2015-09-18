@@ -50,10 +50,16 @@ var goodGuy = require('good-guy-http')({
                                      // useful for ensuring that expensive parsing happens only once
   
   defaultCaching: {                  // default caching settings for responses without Cache-Control                   
-    cached: true, 
-    timeToLive: 5000, 
-    mustRevalidate: false 
-  }  
+    cached: true,                    // - whether such responses should be cached at all
+    timeToLive: 5000,                // - for how many ms
+    mustRevalidate: false            // - is it OK to return a stale response and fetch in the background?
+  }
+  
+  clientErrorCaching: {              // how 4xx errors are treated with regards to caching
+    cached: true,                    // they are cached by default, but you can opt out
+    timeToLive: 60000,
+    mustRevalidate: false
+  }
 });
 ```
 

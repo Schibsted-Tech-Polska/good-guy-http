@@ -15,18 +15,18 @@
   "author": "Jakub Wasilewski <wasyl@wasyl.eu>",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "2.9.24",
-    "request": "2.55.0",
+    "bluebird": "2.10.0",
+    "request": "2.62.0",
     "underscore": "1.8.3",
-    "underscore.string": "3.0.3"
+    "underscore.string": "3.2.2"
   },
   "devDependencies": {
-    "coveralls": "^2.11.2",
-    "express": "^4.12.3",
-    "istanbul": "^0.3.13",
-    "jshint": "^2.6.3",
-    "mocha": "^2.2.1",
-    "sinon": "^1.14.1",
-    "supertest": "^0.15.0"
+    "coveralls": "^2.11.4",
+    "express": "^4.13.3",
+    "istanbul": "^0.3.20",
+    "jshint": "^2.8.0",
+    "mocha": "^2.3.2",
+    "sinon": "^1.16.1",
+    "supertest": "^1.1.0"
   }
 }

@@ -109,5 +109,16 @@ function createExpressApp() {
     res.status(200).set('X-Method', req.method).send('');
   });
 
+  // this route returns a 404 once, then 200 to test 4xx caching
+  var first404then200Ids = {};
+  app.get('/first-404-then-200/:id', function(req, res) {
+    if (first404then200Ids[req.params.id]) {
+      res.status(200).send('Ok.');
+    } else {
+      first404then200Ids[req.params.id] = true;
+      res.status(404).send('Not found.');
+    }
+  });
+
   return app;
 }

@@ -139,14 +139,14 @@ describe("Caching", function() {
 
     Promise.all(requests).then(function(results) {
       var bodies = _.pluck(results, 'body');
-      //assert.deepEqual(bodies, ['Ok!', 'Ok!', 'Ok!', 'Ok!', 'Ok!']);
       assert.equal(cache.storesCalled(), 1);
     }).then(done).catch(done);
   });
 
   it("should cope with slow caches without making fetches incredibly long", function(done) {
     var cache = slowCache(3000);
-    var gghttp = lib({cache: cache, cacheResponseTimeout: 20, errorLogger: function(){}});
+    var gghttp = lib({cache: cache, cacheResponseTimeout: 20, errorLogger: function() {
+    }});
     var url = app.url('/counter/scwscwmfil/cache-control/max-age=5');
 
     var startTime = (new Date()).getTime();
@@ -158,7 +158,8 @@ describe("Caching", function() {
 
   it("should respect the cache response timeout set", function(done) {
     var cache = slowCache(30);
-    var gghttp = lib({cache: cache, cacheResponseTimeout: 5, errorLogger: function() {}});
+    var gghttp = lib({cache: cache, cacheResponseTimeout: 5, errorLogger: function() {
+    }});
     var url = app.url('/counter/srtcrts/cache-control/max-age=5');
 
     // requests should work despite the cache not responding in time
@@ -185,12 +186,56 @@ describe("Caching", function() {
       expectResponse(res, '2', 'fresh');
     }).then(done).catch(done);
   });
+
+  it("should cache 4xx errors by default", function(done) {
+    var gghttp = lib({mockTimer: timer});
+
+    var url = app.url('/first-404-then-200/sc4xxebd');
+    expectError(gghttp(url)).then(function(err) {
+      assert.equal(err.statusCode, 404);
+      timer.advance(1000);
+      return expectError(gghttp(url));
+    }).then(function(err) {
+      // still 404 (the URL now returns 200, but it should not be re-fetched)
+      assert.equal(err.statusCode, 404);
+      timer.advance(120000);
+      return gghttp(url);
+    }).then(function(response) {
+      // the cache should be expired by now, so we should get a fresh 200
+      assert.equal(response.body, 'Ok.');
+    }).then(done).catch(done);
+  });
+
+  it("should make it possible to turn off 4xx caching", function(done) {
+    var gghttp = lib({mockTimer: timer, clientErrorCaching: {cached: false}});
+
+    var url = app.url('/first-404-then-200/smiptto4xxc');
+    expectError(gghttp(url)).then(function(err) {
+      assert.equal(err.statusCode, 404);
+      timer.advance(1000);
+      return gghttp(url);
+    }).then(function(response) {
+      // now 200 (since we re-fetch without caching)
+      assert.equal(response.body, "Ok.");
+    }).then(done).catch(done);
+  });
+
 });
 
 
 function expectResponse(response, body, ggState) {
   assert.equal(response.body, body);
   assert.equal(cacheState(response), ggState);
+}
+
+function expectError(promise) {
+  return new Promise(function(resolve, reject) {
+    promise.then(function(result) {
+      reject(new Error("Expected error, got " + result + " instead."));
+    }).catch(function(err) {
+      resolve(err);
+    });
+  });
 }
 
 function cacheState(response) {

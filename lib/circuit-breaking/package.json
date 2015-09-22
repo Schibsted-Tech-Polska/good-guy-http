@@ -1,0 +1,4 @@
+{
+  "name": "circuit-breaking",
+  "main": "circuit-breaking.js"
+}

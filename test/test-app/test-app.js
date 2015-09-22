@@ -5,6 +5,7 @@ var http = require('http');
 var DEFAULT_PORT = 13515;
 
 module.exports = testApp;
+module.exports.DEFAULT_PORT = DEFAULT_PORT;
 
 /**
  * Sets up a web-app for testing, with a variety of endpoints doing various interesting

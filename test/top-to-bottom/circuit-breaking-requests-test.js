@@ -10,12 +10,14 @@ describe("Circuit breaking", function() {
   var app2 = testApp(testApp.DEFAULT_PORT + 1);
 
   before(function(done) {
-    app.startListening().then(done).catch(done);
-    app2.startListening().then(done).catch(done);
+    Promise.all([app.startListening(), app2.startListening()])
+      .then(function() { done(); })
+      .catch(done);
   });
   after(function(done) {
-    app.stopListening().then(done).catch(done);
-    app.stopListening().then(done).catch(done);
+    Promise.all([app.stopListening(), app2.stopListening()])
+      .then(function() { done(); })
+      .catch(done);
   });
 
   it("should kick in after enough requests fail with a 5xx error", function(done) {

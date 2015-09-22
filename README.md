@@ -11,6 +11,7 @@ Good guy HTTP is an HTTP client library based on the [request][request] module, 
 * collapsing identical requests made at the same time into one
 * reporting HTTP error statuses as errors (promise rejections)
 * sane but strict defaults regarding timeouts etc.
+* implementation of the [circuit breaker][circuitbreaker] pattern
 * optional postprocessing of response to cache expensive parsing/munging operations
 * supports everything request supports by passing all the options to it
 
@@ -45,7 +46,7 @@ var goodGuy = require('good-guy-http')({
                                      // useful for remote caches (e.g. Redis)
   errorLogger: console.error,        // error logging function - a failing cache doesn't break requests, but logs here
                                      // instead
-  postprocess: false                 // pass a function here if you want to postprocess the response before caching/
+  postprocess: false,                // pass a function here if you want to postprocess the response before caching/
                                      // returning it, e.g. function(res) { return JSON.parse(res.body); }
                                      // useful for ensuring that expensive parsing happens only once
   
@@ -53,13 +54,17 @@ var goodGuy = require('good-guy-http')({
     cached: true,                    // - whether such responses should be cached at all
     timeToLive: 5000,                // - for how many ms
     mustRevalidate: false            // - is it OK to return a stale response and fetch in the background?
-  }
+  },
   
   clientErrorCaching: {              // how 4xx errors are treated with regards to caching
     cached: true,                    // they are cached by default, but you can opt out
     timeToLive: 60000,
     mustRevalidate: false
-  }
+  },
+  
+  circuitBreaking: {                 // circuit breaking - if more than errorThreshold percent of requests fail 
+    errorThreshold: 50               // good-guy stops sending them and periodically checks if the situation improves
+  }                                  // you can set 'circuitBreaking: false' to turn this off
 });
 ```
 
@@ -105,8 +110,31 @@ var goodGuy = goodGuyLib({cache: false});                         // disable cac
 var goodGuy = goodGuyLib({cache: customCache});                   // your custom implementation based on Redis/Mongo/Bitcoin blockchain
 ```
 
+### Circuit breaker
+
+To avoid overloading external services that are having trouble coping with the load, good-guy-http uses a circuit breaker
+(based on Yammer's [circuit-breaker-js][circuitbreakerjs]) by default. Each host is treated as a separate service and 
+has a separate circuit breaker.
+
+Once the breaker trips (too many failures), your requests will start failing with a CircuitBrokenError. It can be easily
+identified by having the `code` property set to `ECIRCUIT`. Once the situation improves, requests will start going
+through normally again.
+
+You can configure the error threshold or turn the whole feature off:
+
+```javascript
+var goodGuyLib = require('good-guy-http'); 
+
+var goodGuy = goodGuyLib({
+  circuitBreaking: { errorThreshold: 75 }; // only break the circuit when 75% or more requests fail
+});
+var goodGuy = goodGuyLib({circuitBreaking: false}); // no circuit breaking, please
+```
+
+
+
+
+
 [request]: https://github.com/request/request
-
-
-
- 
+[circuitbreaker]: http://martinfowler.com/bliki/CircuitBreaker.html
+[circuitbreakerjs]: https://github.com/yammer/circuit-breaker-js

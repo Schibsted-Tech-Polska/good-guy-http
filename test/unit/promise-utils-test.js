@@ -2,9 +2,10 @@ var assert = require('assert');
 var Promise = require('bluebird');
 var waitFor = require('../helpers').waitFor;
 
-var retryPromise = require('../../lib/promise-utils').retryPromise;
-var collapsePromises = require('../../lib/promise-utils').collapsePromises;
-var timeoutPromise = require('../../lib/promise-utils').timeoutPromise;
+var promiseUtils = require('../../lib/promise-utils')(Promise);
+var retryPromise = promiseUtils.retryPromise;
+var collapsePromises = promiseUtils.collapsePromises;
+var timeoutPromise = promiseUtils.timeoutPromise;
 
 var expectRejection = require('./../helpers').expectRejection;
 

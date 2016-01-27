@@ -50,6 +50,9 @@ var goodGuy = require('good-guy-http')({
                                      // returning it, e.g. function(res) { return JSON.parse(res.body); }
                                      // useful for ensuring that expensive parsing happens only once
   
+  usePromise: require('bluebird'),   // Promise constructor to use, you may want to replace bluebird with 
+                                     // different implementation, like q or native Promise
+  
   defaultCaching: {                  // default caching settings for responses without Cache-Control                   
     cached: true,                    // - whether such responses should be cached at all
     timeToLive: 5000,                // - for how many ms

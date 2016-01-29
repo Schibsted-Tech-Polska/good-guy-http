@@ -5,7 +5,7 @@ var expectRejection = require('./../helpers').expectRejection;
 
 describe("Promised requests", function() {
   var app = require('./../test-app/test-app')();
-  var req = require('../../lib/promised-request')(request.defaults({timeout: 500}));
+  var req = require('../../lib/promised-request')(request.defaults({timeout: 500}), Promise);
 
   before(function(done) {
     app.startListening().then(done).catch(done);

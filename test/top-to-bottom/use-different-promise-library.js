@@ -11,7 +11,7 @@ describe("Use different Promise library", function() {
     app.stopListening().then(done).catch(done);
   });
 
-  it("should use bluebird by default", function(done) {
+  it("should use built-in Promises, if available", function(done) {
     var gghttp = require('../../')({
       maxRetries: 0,
       collapseIdenticalRequests: false,
@@ -19,12 +19,13 @@ describe("Use different Promise library", function() {
     });
 
     var promise = gghttp(app.url("/return-body/hello")).then(function () {
-      assert.ok(!('ninvoke' in promise));
+      var defaultCtorForThisNodeVersion = global.Promise || require('bluebird');
+      assert.ok(promise instanceof defaultCtorForThisNodeVersion);
       done();
     }).catch(done);
   });
 
-  it("should use provided constructor", function(done) {
+  it("should use custom constructor, if provided", function(done) {
     var qPromise = require('q').Promise;
 
     var gghttp = require('../../')({

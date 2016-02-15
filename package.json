@@ -15,16 +15,16 @@
   "author": "Jakub Wasilewski <wasyl@wasyl.eu>",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "2.10.0",
+    "bluebird": "3.3.1",
     "circuit-breaker-js": "Schibsted-Tech-Polska/circuit-breaker-js#v0.0.2",
-    "request": "2.62.0",
+    "request": "2.69.0",
     "underscore": "1.8.3",
-    "underscore.string": "3.2.2"
+    "underscore.string": "3.2.3"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
     "express": "^4.13.3",
-    "istanbul": "^0.3.20",
+    "istanbul": "^0.4.2",
     "jshint": "^2.8.0",
     "mocha": "^2.3.2",
     "q": "^1.4.1",

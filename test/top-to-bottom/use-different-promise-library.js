@@ -19,9 +19,7 @@ describe("Use different Promise library", function() {
     });
 
     var promise = gghttp(app.url("/return-body/hello")).then(function () {
-      console.log(promise.__proto__);
       assert.ok(!('ninvoke' in promise));
-
       done();
     }).catch(done);
   });

@@ -13,6 +13,11 @@ describe("Request keys", function() {
     assert.equal(requestKey(req), 'GET|http://example.org');
   });
 
+  it("should handle the 'qs' parameter correctly", function() {
+    var req = canonicalizeRequest({url: 'http://example.org', qs: {a: 1, b: 2}});
+    assert.equal(requestKey(req), 'GET|http://example.org?a=1&b=2');
+  });
+
   it("should include accept header if provided", function() {
     var req = canonicalizeRequest({url: 'http://example.org', headers: {'AcCePt': 'application/json'}});
     assert.equal(requestKey(req), 'GET|http://example.org|Accept:application/json');

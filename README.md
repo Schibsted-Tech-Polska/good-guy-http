@@ -59,6 +59,9 @@ var goodGuy = require('good-guy-http')({
     mustRevalidate: false            // - is it OK to return a stale response and fetch in the background?
   },
   
+  forceCaching: {...},               // uses the same properties as 'defaultCaching', but forces all requests
+                                     // to use the settings (existing Cache-Control headers are IGNORED)
+  
   clientErrorCaching: {              // how 4xx errors are treated with regards to caching
     cached: true,                    // they are cached by default, but you can opt out
     timeToLive: 60000,

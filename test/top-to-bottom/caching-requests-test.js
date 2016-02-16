@@ -172,6 +172,26 @@ describe("Caching", function() {
     }).then(done).catch(done);
   });
 
+  it("should let the user force the caching settings", function(done) {
+    var gghttp = lib({mockTimer: timer, forceCaching: {cached: true, timeToLive: 5000, mustRevalidate: false}});
+
+    var url = app.url('/counter/sltuftcs/cache-control/no-cache,no-store,must-revalidate');
+    gghttp(url).then(function(res) {
+      // first request should return a fresh response directly from the app
+      expectResponse(res, '1', 'fresh');
+      timer.advance(1000);
+      return gghttp(url);
+    }).then(function(res) {
+      // the second should be cached, despite the Cache-control header
+      expectResponse(res, '1', 'cached');
+      timer.advance(5000);
+      return gghttp(url);
+    }).then(function(res) {
+      // this should be a stale response, since mustRevalidate was forced to false
+      expectResponse(res, '1', 'stale');
+    }).then(done).catch(done);
+  });
+
   it("should differentiate between requests with different Accept", function(done) {
     var gghttp = lib({mockTimer: timer});
 

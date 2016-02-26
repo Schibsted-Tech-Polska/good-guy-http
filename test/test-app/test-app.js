@@ -74,6 +74,13 @@ function createExpressApp() {
     }, parseInt(req.params.ms));
   });
 
+  // responds with a body of the chosen size
+  app.get('/response-size/:bytes', function(req, res) {
+    var size = parseInt(req.params.bytes);
+    res.set({'content-type': 'application/octet-stream'});
+    res.status(200).send(new Buffer(size)).end();
+  });
+
   // for each ID - fails 2 times with 500, then returns "Ok!"
   var fttsCounts = {};
   app.all('/fail-twice-then-succeed/:id', function(req, res) {

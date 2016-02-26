@@ -70,8 +70,8 @@ describe("Promised requests", function() {
 
   it("should include the request in connectivity errors", function(done) {
     expectRejection(req('http://127.0.0.1:1')).then(function(err) {
-      assert(err.request);
-      assert.equal(err.request, 'http://127.0.0.1:1');
+      assert.ok(err.request);
+      assert.equal(err.request.url, 'http://127.0.0.1:1');
     }).then(done).catch(done);
   });
 
@@ -81,6 +81,14 @@ describe("Promised requests", function() {
       assert.ok(err.stack.indexOf('[While requesting GET|http://127.0.0.1:1?hi=there]') >= 0);
       assert.ok(err.toString().indexOf('[While requesting GET|http://127.0.0.1:1?hi=there]') >= 0);
     }).then(done).catch(done);
+  });
+
+  it("should respect the maximum response size", function(done) {
+    var req = require('../../lib/promised-request')(request.defaults({timeout: 500}), Promise, {maxResponseSize: 2048});
+    expectRejection(req(app.url('/response-size/4096'))).then(function(err) {
+      assert.equal(err.code, 'ERESPONSETOOBIG');
+    }).then(done).catch(done);
+
   });
 });
 

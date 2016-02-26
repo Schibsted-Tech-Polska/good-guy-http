@@ -77,7 +77,6 @@ describe("Promised requests", function() {
 
   it("should add request info to error messages", function(done) {
     expectRejection(req('http://127.0.0.1:1?hi=there')).then(function(err) {
-      console.log(err.stack);
       assert.ok(err.message.indexOf('[While requesting GET|http://127.0.0.1:1?hi=there]') >= 0);
       assert.ok(err.stack.indexOf('[While requesting GET|http://127.0.0.1:1?hi=there]') >= 0);
       assert.ok(err.toString().indexOf('[While requesting GET|http://127.0.0.1:1?hi=there]') >= 0);

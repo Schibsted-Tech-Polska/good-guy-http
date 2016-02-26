@@ -44,6 +44,8 @@ var goodGuy = require('good-guy-http')({
   cache: ...,                        // cache object - see below for details         
   cacheResponseTimeout: 500          // how many ms to wait for the cache to respond before ignoring it completely
                                      // useful for remote caches (e.g. Redis)
+  maximumResponseSize: 1024*1024     // any responses above this size will be rejected to prevent memory trouble,                                                                               
+                                     // the default is 1MB
   errorLogger: console.error,        // error logging function - a failing cache doesn't break requests, but logs here
                                      // instead
   postprocess: false,                // pass a function here if you want to postprocess the response before caching/

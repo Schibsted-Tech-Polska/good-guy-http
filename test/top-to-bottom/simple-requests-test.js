@@ -1,8 +1,9 @@
 var assert = require('assert');
 var expectRejection = require('./../helpers').expectRejection;
+var testApp = require('./../test-app/test-app');
 
 describe("Good guy HTTP", function() {
-  var app = require('./../test-app/test-app')();
+  var app = testApp();
 
   var gghttp = require('../../')({
     maxRetries: 0,
@@ -62,7 +63,7 @@ describe("Good guy HTTP", function() {
   });
 
   it("should reject when connection fails", function(done) {
-    expectRejection(gghttp(app.url("http://127.0.0.1:1"))).then(function(err) {
+    expectRejection(gghttp(testApp("1").url("/"))).then(function(err) {
       assert.equal(err.code, "ECONNREFUSED");
       done();
     }).catch(done);

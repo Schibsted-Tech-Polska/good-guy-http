@@ -54,7 +54,7 @@ describe("Promised requests", function() {
   });
 
   it("should reject when connection fails", function(done) {
-    expectRejection(req(app.url("http://127.0.0.1:1"))).then(function(err) {
+    expectRejection(req("http://127.0.0.1:1")).then(function(err) {
       assert.equal(err.code, "ECONNREFUSED");
       done();
     }).catch(done);

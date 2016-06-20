@@ -13,6 +13,29 @@ describe('LRUCache', function(){
     }).then(done).catch(done);
   });
 
+  it('should store values rather than references to elements', function(done) {
+    var lru = new LRUCache(2);
+    var original = {answer: 42};
+    lru.store('hitchhiker', original).then(function() {
+      original.answer = 43;
+      return lru.retrieve('hitchhiker');
+    }).then(function(object) {
+      assert.deepEqual(object, {answer: 42});
+    }).then(done).catch(done);
+  });
+
+  it('should return values rather than references to elements', function(done) {
+    var lru = new LRUCache(2);
+    lru.store('hitchhiker', {answer: 42}).then(function() {
+      return lru.retrieve('hitchhiker');
+    }).then(function(object) {
+      object.answer = 43;
+      return lru.retrieve('hitchhiker');
+    }).then(function(object) {
+      assert.deepEqual(object, {answer: 42});
+    }).then(done).catch(done);
+  });
+
   it('should throw away oldest element when nothing is retrieved', function(done) {
     var lru = new LRUCache(3);
 

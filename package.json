@@ -17,6 +17,7 @@
   "dependencies": {
     "bluebird": "3.3.1",
     "circuit-breaker-js": "Schibsted-Tech-Polska/circuit-breaker-js#v0.0.2",
+    "clone": "1.0.2",
     "request": "2.69.0",
     "underscore": "1.8.3",
     "underscore.string": "3.2.3"

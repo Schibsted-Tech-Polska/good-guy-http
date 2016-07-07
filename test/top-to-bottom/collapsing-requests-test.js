@@ -26,8 +26,8 @@ describe("Requests with collapsing", function() {
   it("shouldn't collapse even slightly different requests", function(done) {
     var gghttp = require('../../')({cache: false});
     var url = app.url("/incrementing-counter/sncesdr");
-    var first = gghttp({url: url, timeout: 20});
-    var second = gghttp({url: url, timeout: 21});
+    var first = gghttp({url: url, timeout: 100});
+    var second = gghttp({url: url, timeout: 101});
     Promise.all([first, second]).then(function(results) {
       results = _.pluck(results, 'body');
       assert.deepEqual(results.sort(), ['1', '2']);

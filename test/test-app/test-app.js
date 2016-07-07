@@ -99,7 +99,7 @@ function createExpressApp() {
     icCounts[req.params.id] = count + 1;
     setTimeout(function() {
       res.status(200).send(count.toString());
-    }, 10);
+    }, 50);
   });
 
   // incrementing counter with a configurable cache-control setting

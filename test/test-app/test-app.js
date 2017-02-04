@@ -112,6 +112,20 @@ function createExpressApp() {
       .send(count.toString());
   });
 
+  // for each ID - return success response with cache, then fail
+  var stfCounts = {};
+  app.all('/succeed-then-fail/:id/cache-control/:cache', function(req, res) {
+    var count = stfCounts[req.params.id] || 1;
+    stfCounts[req.params.id] = count + 1;
+
+    if(count < 2)
+      res.status(200)
+        .set('Cache-Control', req.params.cache)
+        .send('Ok!');
+    else
+      res.status(500).send("Oh my!");
+  });
+
   // register a route for each HTTP method returning the method that was used in a header (to test HEAD properly)
   app.all('/return-method-used/:method', function(req, res) {
     res.status(200).set('X-Method', req.method).send('');

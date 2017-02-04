@@ -240,6 +240,26 @@ describe("Caching", function() {
     }).then(done).catch(done);
   });
 
+  it("should log background update errors", function(done) {
+    var errorMsg = '';
+    var gghttp = lib({mockTimer: timer, errorLogger: function(msg) {
+      errorMsg = msg;
+    }});
+
+    var url = app.url('/succeed-then-fail/slbue/cache-control/max-age=5');
+    gghttp(url).then(function(res) {
+      // wait for cache expiration
+      timer.advance(6000);
+      return gghttp(url);
+    }).then(function(res) {
+      // give some time for the failed background update to finish
+      return wait(50);
+    }).then(function() {
+      // error message should be populated by now
+      assert.ok(errorMsg.indexOf('Error during background fetch') > -1);
+    }).then(done).catch(done);
+  });
+
 });
 
 

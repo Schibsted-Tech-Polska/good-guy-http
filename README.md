@@ -123,10 +123,12 @@ var goodGuy = goodGuyLib({cache: customCache});                   // your custom
 
 Only idempotent requests are cached
 
-#### [Idempotence](https://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning)
+#### Idempotence
 
 By default only HEAD, GET and OPTIONS request are treated as idempotent.
-That means only mentioned above request could be cached or retried as they, in short terms, modify state.
+That means only mentioned above request could be cached or retried as they, in short terms, modify state
+(for full explanation of idempotence follow the [wikipedia description](https://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning) on the topic)
+
 That behaviour could be changed using `idempotent` key in options.
 Some services does that are not RESTful (e.g. RPC) marking request as idempotent is quite useful.
 This way failed request will be retried up to 5 times:

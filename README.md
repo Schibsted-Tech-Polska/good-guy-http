@@ -72,7 +72,10 @@ var goodGuy = require('good-guy-http')({
   
   circuitBreaking: {                 // circuit breaking - if more than errorThreshold percent of requests fail 
     errorThreshold: 50               // good-guy stops sending them and periodically checks if the situation improves
-  }                                  // you can set 'circuitBreaking: false' to turn this off
+  },                                 // you can set 'circuitBreaking: false' to turn this off
+  
+  idempotent: ...                    // request idempotence (boolean). By default it's automatically selected
+                                     // depending on request method
 });
 ```
 
@@ -118,6 +121,32 @@ var goodGuy = goodGuyLib({cache: false});                         // disable cac
 var goodGuy = goodGuyLib({cache: customCache});                   // your custom implementation based on Redis/Mongo/Bitcoin blockchain
 ```
 
+Only idempotent requests are cached
+
+#### [Idempotence](https://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning)
+
+By default only HEAD, GET and OPTIONS request are treated as idempotent.
+That means only mentioned above request could be cached or retried as they, in short terms, modify state.
+That behaviour could be changed using `idempotent` key in options.
+Some services does that are not RESTful (e.g. RPC) marking request as idempotent is quite useful.
+This way failed request will be retried up to 5 times:
+
+```javascript
+goodGuy({
+    url: 'http://elasticsearch-server.io/_search',
+    method: 'POST',
+    maxRetries: 5,
+    idempotent: true,
+    json: true,
+    body: {
+        query: {
+            match_all: {}
+        }
+    }
+})
+  .then(...);
+```
+
 ### Circuit breaker
 
 To avoid overloading external services that are having trouble coping with the load, good-guy-http uses a circuit breaker
@@ -134,7 +163,7 @@ You can configure the error threshold or turn the whole feature off:
 var goodGuyLib = require('good-guy-http'); 
 
 var goodGuy = goodGuyLib({
-  circuitBreaking: { errorThreshold: 75 }; // only break the circuit when 75% or more requests fail
+  circuitBreaking: { errorThreshold: 75 } // only break the circuit when 75% or more requests fail
 });
 var goodGuy = goodGuyLib({circuitBreaking: false}); // no circuit breaking, please
 ```

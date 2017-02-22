@@ -126,7 +126,7 @@ Only idempotent requests are cached
 #### Idempotence
 
 By default only HEAD, GET and OPTIONS request are treated as idempotent.
-That means only requests mentioned above could be cached or retried as they, in short terms, modify state
+That means only requests mentioned above could be cached or retried as they, in short terms, do not modify state
 (for full explanation of idempotence follow the [wikipedia description](https://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning) on the topic).
 
 That behaviour could be changed using `idempotent` key in options.

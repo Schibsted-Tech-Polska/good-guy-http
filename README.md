@@ -130,8 +130,8 @@ That means only mentioned above request could be cached or retried as they, in s
 (for full explanation of idempotence follow the [wikipedia description](https://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning) on the topic)
 
 That behaviour could be changed using `idempotent` key in options.
-Some services does that are not RESTful (e.g. RPC) marking request as idempotent is quite useful.
-This way failed request will be retried up to 5 times:
+For some services does that are not REST-ish (e.g. RPC) marking request as idempotent is quite useful.
+This way failed ElasticSearch query will be retried up to 5 times:
 
 ```javascript
 goodGuy({

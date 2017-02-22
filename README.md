@@ -126,12 +126,12 @@ Only idempotent requests are cached
 #### Idempotence
 
 By default only HEAD, GET and OPTIONS request are treated as idempotent.
-That means only mentioned above request could be cached or retried as they, in short terms, modify state
-(for full explanation of idempotence follow the [wikipedia description](https://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning) on the topic)
+That means only requests mentioned above could be cached or retried as they, in short terms, modify state
+(for full explanation of idempotence follow the [wikipedia description](https://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning) on the topic).
 
 That behaviour could be changed using `idempotent` key in options.
 For some services does that are not REST-ish (e.g. RPC) marking request as idempotent is quite useful.
-This way failed ElasticSearch query will be retried up to 5 times:
+For example this way failed ElasticSearch query will be retried up to 5 times:
 
 ```javascript
 goodGuy({

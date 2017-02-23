@@ -2,6 +2,7 @@ var request = require('request');
 var assert = require('assert');
 var Promise = require('bluebird');
 var expectRejection = require('./../helpers').expectRejection;
+var waitFor = require('./../helpers').waitFor;
 
 describe("Promised requests", function() {
   var app = require('./../test-app/test-app')();
@@ -88,7 +89,16 @@ describe("Promised requests", function() {
     expectRejection(req(app.url('/response-size/4096'))).then(function(err) {
       assert.equal(err.code, 'ERESPONSETOOBIG');
     }).then(done).catch(done);
+  });
 
+  it("should expose method to abort the request", function(done) {
+    var promised = req(app.url('/delay-for-ms/400'));
+    expectRejection(promised).then(function(err) {
+      assert.equal(err.code, 'EREQUESTABORTED')
+    }).then(done).catch(done);
+    waitFor(1).then(function() {
+      promised.abort();
+    });
   });
 });
 

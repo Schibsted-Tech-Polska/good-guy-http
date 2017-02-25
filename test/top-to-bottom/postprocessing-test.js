@@ -1,4 +1,3 @@
-var Promise = require('bluebird');
 var assert = require('assert');
 var lib = require('../../');
 var mockTimer = require('../helpers').mockTimer;

@@ -1,6 +1,5 @@
 var _ = require('underscore');
 var assert = require('assert');
-var Promise = require('bluebird');
 
 describe('Reconfiguration', function() {
   var app = require('./../test-app/test-app')();

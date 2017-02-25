@@ -1,5 +1,4 @@
 var assert = require('assert');
-var Promise = require('bluebird');
 var waitFor = require('../helpers').waitFor;
 
 var promiseUtils = require('../../lib/promise-utils')(Promise);

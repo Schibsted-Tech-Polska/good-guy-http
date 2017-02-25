@@ -11,7 +11,7 @@ describe("Use different Promise library", function() {
     app.stopListening().then(done).catch(done);
   });
 
-  it("should use built-in Promises, if available", function(done) {
+  it("should use built-in Promises by default", function(done) {
     var gghttp = require('../../')({
       maxRetries: 0,
       collapseIdenticalRequests: false,
@@ -19,8 +19,7 @@ describe("Use different Promise library", function() {
     });
 
     var promise = gghttp(app.url("/return-body/hello")).then(function () {
-      var defaultCtorForThisNodeVersion = global.Promise || require('bluebird');
-      assert.ok(promise instanceof defaultCtorForThisNodeVersion);
+      assert.ok(promise instanceof Promise);
       done();
     }).catch(done);
   });

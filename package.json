@@ -14,8 +14,10 @@
   ],
   "author": "Jakub Wasilewski <wasyl@wasyl.eu>",
   "license": "MIT",
+  "engines": {
+    "node": ">=0.12"
+  },
   "dependencies": {
-    "bluebird": "3.3.1",
     "circuit-breaker-js": "Schibsted-Tech-Polska/circuit-breaker-js#v0.0.2",
     "clone": "1.0.2",
     "request": "2.74.0",

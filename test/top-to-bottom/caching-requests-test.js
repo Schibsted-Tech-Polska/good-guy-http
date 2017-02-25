@@ -1,5 +1,4 @@
 var sinon = require('sinon');
-var Promise = global.Promise || require('bluebird');
 var assert = require('assert');
 var lib = require('../../');
 var mockTimer = require('../helpers').mockTimer;

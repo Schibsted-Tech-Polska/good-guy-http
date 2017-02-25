@@ -1,6 +1,5 @@
 var request = require('request');
 var assert = require('assert');
-var Promise = require('bluebird');
 var expectRejection = require('./../helpers').expectRejection;
 var waitFor = require('./../helpers').waitFor;
 

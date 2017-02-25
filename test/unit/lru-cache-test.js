@@ -1,5 +1,4 @@
 var assert = require('assert');
-var Promise = require('bluebird');
 var LRUCache = require('../../lib/caching/lru-cache');
 
 describe('LRUCache', function(){

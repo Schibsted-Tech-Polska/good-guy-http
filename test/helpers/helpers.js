@@ -1,5 +1,3 @@
-var Promise = require('bluebird');
-
 /**
  * Inverts a promise: rejections turns into successes (with error as the value),
  * while successes turn into rejections.

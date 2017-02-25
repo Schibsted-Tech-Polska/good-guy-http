@@ -1,6 +1,5 @@
 var assert = require('assert');
 var _ = require('underscore');
-var Promise = global.Promise || require('bluebird');
 
 var circuitBreaking = require('../../lib/circuit-breaking');
 var expectRejection = require('../helpers').expectRejection;

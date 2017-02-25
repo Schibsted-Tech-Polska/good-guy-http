@@ -1,6 +1,5 @@
 var assert = require('assert');
 var _ = require('underscore');
-var Promise = require('bluebird');
 var lib = require('../../');
 var expectRejection = require('../helpers').expectRejection;
 

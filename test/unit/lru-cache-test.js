@@ -12,6 +12,17 @@ describe('LRUCache', function(){
     }).then(done).catch(done);
   });
 
+  it('should be able to evict elements', function(done) {
+    var lru = new LRUCache(2);
+    lru.store('hitchhiker', {answer: 42}).then(function() {
+      return lru.evict('hitchhiker');
+    }).then(function() {
+      return lru.retrieve('hitchhiker');
+    }).then(function(object) {
+      assert.equal(object, undefined);
+    }).then(done).catch(done);
+  });
+
   it('should store values rather than references to elements', function(done) {
     var lru = new LRUCache(2);
     var original = {answer: 42};

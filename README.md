@@ -110,6 +110,7 @@ Any object that has these methods can be used as a cache:
 
 * `store(key, object)` - returning a promise that resolves when the object is stored
 * `retrieve(key)` - returning a promise that resolves with the previously stored object, or undefined if no object is found
+* `evict(key)` - returning a promise that resolves when the object is evicted from cache
 
 By default, an in-memory cache limited to the 500 most recently used requests is used, but you can easily override this:
 

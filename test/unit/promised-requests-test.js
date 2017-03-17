@@ -90,15 +90,17 @@ describe("Promised requests", function() {
     }).then(done).catch(done);
   });
 
-  it("should expose method to abort the request", function(done) {
-    var promised = req(app.url('/delay-for-ms/400'));
-    expectRejection(promised).then(function(err) {
-      assert.equal(err.code, 'EREQUESTABORTED')
-    }).then(done).catch(done);
-    waitFor(1).then(function() {
-      promised.abort();
+  if (process.env.GG_ABORTABLE_REQUEST) {
+    it("should expose method to abort the request", function (done) {
+      var promised = req(app.url('/delay-for-ms/400'));
+      expectRejection(promised).then(function (err) {
+        assert.equal(err.code, 'EREQUESTABORTED');
+      }).then(done).catch(done);
+      waitFor(1).then(function () {
+        promised.abort();
+      });
     });
-  });
+  }
 });
 
 

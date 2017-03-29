@@ -122,6 +122,11 @@ var goodGuy = goodGuyLib({cache: false});                         // disable cac
 var goodGuy = goodGuyLib({cache: customCache});                   // your custom implementation based on Redis/Mongo/Bitcoin blockchain
 ```
 
+#### Cache modules
+
+* [good-guy-cache-redis](https://www.npmjs.com/package/good-guy-cache-redis)
+* [good-guy-disk-cache](https://www.npmjs.com/package/good-guy-disk-cache)
+
 Only idempotent requests are cached
 
 #### Idempotence

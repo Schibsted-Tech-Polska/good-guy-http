@@ -1,15 +1,20 @@
 language: node_js
+
 node_js:
 - '5.6.0'
 - '0.12'
-#deploy:
-#  provider: npm
-#  email: wasyl@wasyl.eu
-#  api_key:
-#    secure: PjzYLQeV8q5aXDJ5dEYBMqKk7KLEapqnBQ5qKw+45Pk15m0hISonx8VQExnTwieJvoIYz14XY9ZmBCnFu6IywnD8l5QJvkmlWp9sw6CGyTJE9shw12vfnWQCdEieetN2U3Sz+rGqIS0sQzt+F60h+hFJFy7kiqow1hVTlSYqUh4=
-#  on:
-#    tags: true
-#    repo: Schibsted-Tech-Polska/good-guy-http
+
+notifications:
+  email: false
+
+before_script:
+  - npm install --global snyk
+  - snyk auth ${SNYK_TOKEN}
+
+script:
+  - npm run test
+  - snyk test
+
 after_success:
 - npm run coverage
 - cat ./coverage/lcov.info | node_modules/.bin/coveralls

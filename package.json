@@ -18,20 +18,20 @@
     "node": ">=0.12"
   },
   "dependencies": {
-    "circuit-breaker-js": "Schibsted-Tech-Polska/circuit-breaker-js#v0.0.2",
-    "clone": "1.0.2",
-    "request": "2.74.0",
+    "circuit-breaker-js": "github:Schibsted-Tech-Polska/circuit-breaker-js#v0.0.2",
+    "clone": "^2.1.1",
+    "request": "2.81.0",
     "underscore": "1.8.3",
-    "underscore.string": "3.2.3"
+    "underscore.string": "3.3.4"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",
     "express": "^4.13.3",
     "istanbul": "^0.4.2",
     "jshint": "^2.8.0",
-    "mocha": "^2.3.2",
+    "mocha": "^3.5.0",
     "q": "^1.4.1",
-    "sinon": "^1.16.1",
-    "supertest": "^1.1.0"
+    "sinon": "^3.2.0",
+    "supertest": "^3.0.0"
   }
 }

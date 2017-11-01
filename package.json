@@ -18,7 +18,7 @@
     "node": ">=0.12"
   },
   "dependencies": {
-    "circuit-breaker-js": "github:Schibsted-Tech-Polska/circuit-breaker-js#v0.0.2",
+    "@schibstedpl/circuit-breaker-js": "0.0.2",
     "clone": "2.1.1",
     "request": "2.81.0",
     "underscore": "1.8.3",

@@ -81,4 +81,27 @@ describe('LRUCache', function(){
       assert.deepEqual(values, ['1', '2', '3', undefined, 'new']);
     }).then(done).catch(done);
   });
+
+  it('should be able to use custom Promise implementation', function(done) {
+    var spyPromise = createSpyPromise();
+    var lru = new LRUCache(2, spyPromise);
+    lru.store('hitchhiker', {answer: 42}).then(function() {
+      return lru.retrieve('hitchhiker');
+    }).then(function(object) {
+      assert.equal(spyPromise.resolveCallsCount(), 2);
+    }).then(done).catch(done);
+  });
 });
+
+function createSpyPromise() {
+  var resolveCallsCount = 0;
+  return {
+    resolve: function(value) {
+      resolveCallsCount += 1;
+      return Promise.resolve(value);
+    },
+    resolveCallsCount: function() {
+      return resolveCallsCount;
+    }
+  };
+}

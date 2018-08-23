@@ -15,7 +15,7 @@
   "author": "Jakub Wasilewski <wasyl@wasyl.eu>",
   "license": "MIT",
   "engines": {
-    "node": ">=0.12"
+    "node": ">=5"
   },
   "dependencies": {
     "@schibstedpl/circuit-breaker-js": "0.0.2",

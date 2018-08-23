@@ -19,10 +19,10 @@
   },
   "dependencies": {
     "@schibstedpl/circuit-breaker-js": "0.0.2",
+    "capitalize": "^1.0.0",
     "clone": "2.1.1",
     "request": "2.87.0",
-    "underscore": "1.8.3",
-    "underscore.string": "3.3.4"
+    "underscore": "1.8.3"
   },
   "devDependencies": {
     "coveralls": "^2.11.4",

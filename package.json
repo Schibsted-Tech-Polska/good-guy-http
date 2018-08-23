@@ -25,13 +25,13 @@
     "underscore": "1.8.3"
   },
   "devDependencies": {
-    "coveralls": "^2.11.4",
+    "coveralls": "^3.0.2",
     "express": "^4.13.3",
     "istanbul": "^0.4.2",
     "jshint": "^2.8.0",
-    "mocha": "^3.5.0",
+    "mocha": "^5.2.0",
     "q": "^1.4.1",
-    "sinon": "^3.2.0",
+    "sinon": "^6.1.5",
     "supertest": "^3.0.0"
   }
 }

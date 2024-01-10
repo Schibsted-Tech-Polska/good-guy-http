@@ -1,8 +1,6 @@
 language: node_js
 node_js:
-- '8.11.4'
-- '6.14.4'
-- '5.6.0'
+  - "18"
 #deploy:
 #  provider: npm
 #  email: wasyl@wasyl.eu
@@ -12,5 +10,5 @@ node_js:
 #    tags: true
 #    repo: Schibsted-Tech-Polska/good-guy-http
 after_success:
-- npm run coverage
-- cat ./coverage/lcov.info | node_modules/.bin/coveralls
+  - npm run coverage
+  - cat ./coverage/lcov.info | node_modules/.bin/coveralls
